@@ -13,7 +13,7 @@ const Home = () => {
     getPosts();
     if (!user) {
       navigate("/login");
-      Location.reload();
+      window.location.reload();
     }
   }, []);
 
