@@ -1,11 +1,20 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Alert from "../../components/Alert";
+import logo from "../../assets/blogo.png";
+import Spinner from "../../utils/Spinner";
 
 const Login = () => {
   const navigate = useNavigate();
   const [cred, setCred] = useState({ email: "", password: "" });
   const [alert, setAlert] = useState(null);
+  const [click, setClick] = useState(false);
+
+  const toggleBtn = () => {
+    if (submitHandler) {
+      setClick(!click);
+    }
+  };
 
   const showAlert = () => {
     setAlert(true);
@@ -28,6 +37,7 @@ const Login = () => {
     );
 
     const json = await response.json();
+    setCred({ ...cred, json });
     console.log(json);
 
     if (json.success) {
@@ -46,40 +56,25 @@ const Login = () => {
   };
 
   return (
-    <div className="md:h-full w-full h-3/4 flex justify-center items-center">
-      <div className="container w-11/12 mx-4 my-8 md:mx-auto sm:mx-auto md:p-12 md:w-1/2 bg-white shadow px-4">
+    <div className="h-[90vh] w-full flex justify-center items-center">
+      <div className="container w-11/12 my-8 mx-auto md:p-12 md:w-1/3 bg-white shadow px-7">
         {alert && <Alert color="red" error="Invalid email and password" />}
-        <div className="my-4 text-center py-3">
-          <div className="icon">
-            <i className="fa-2xl fa-solid fa-user-lock"></i>
-          </div>
-          <h2 className="text-3xl">Login</h2>
+        <div className="my-4 text-center py-5 mx-6 sm:mx-8 ">
+          <img src={logo} alt="logo" />
         </div>
         <form onSubmit={submitHandler}>
           <div className="mb-6">
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-900"
-            >
-              Your email
-            </label>
             <input
               type="email"
               name="email"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="name@gmail.com"
+              placeholder="Email..."
               required
               onChange={changeHandler}
               value={cred.email}
             />
           </div>
           <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block mb-2 text-sm font-medium text-gray-900"
-            >
-              Your password
-            </label>
             <input
               type="password"
               name="password"
@@ -87,19 +82,32 @@ const Login = () => {
               required
               onChange={changeHandler}
               value={cred.password}
+              placeholder="Password..."
             />
           </div>
 
           <button
+            onClick={toggleBtn}
+            disabled={!cred.email || cred.password.length < 5}
             type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-gray-500"
           >
-            Submit
+            {!alert && !click && submitHandler
+              ? "Login"
+              : cred.json && cred.json.success && <Spinner />}
+            {cred.json && !cred.json.success && "Login"}
           </button>
         </form>
+
         <div className="my-3">
-          <Link to="/signup" variant="body2">
-            {"Don't have an account? Sign Up"}
+          Don't have an account?
+          <Link
+            to="/signup"
+            variant="body2"
+            className="font-bold text-blue-600"
+          >
+            {" "}
+            Sign up
           </Link>
         </div>
       </div>

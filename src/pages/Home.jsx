@@ -15,6 +15,7 @@ const Home = () => {
       navigate("/login");
       window.location.reload();
     }
+    // eslint-disable-next-line
   }, []);
 
   return (

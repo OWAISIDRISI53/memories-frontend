@@ -1,8 +1,8 @@
 import moment from "moment/moment";
 import React, { useContext, useEffect } from "react";
 import postContext from "../../context/post/postContext";
-import Alert from "../Alert";
-import Loader from "../Loader";
+// import Alert from "../Alert";
+// import Loader from "../Loader";
 
 const Post = ({ post }) => {
   const context = useContext(postContext);
