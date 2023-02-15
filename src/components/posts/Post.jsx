@@ -6,7 +6,14 @@ import postContext from "../../context/post/postContext";
 
 const Post = ({ post }) => {
   const context = useContext(postContext);
-  const { getPosts, deletePost, defaultImage, showAlert } = context;
+  const {
+    getPosts,
+    deletePost,
+    defaultImage,
+    showAlert,
+    likePost,
+    getUserPost,
+  } = context;
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -16,8 +23,48 @@ const Post = ({ post }) => {
   };
 
   const likeHandler = () => {
-    showAlert();
-    alert("Coming Soon ");
+    likePost(post);
+    getPosts();
+  };
+
+  // useEffect(() => {(
+
+  // )
+  //   const noPost = getUserPost(post);
+  //   console.log(noPost);
+  // }, []);
+
+  const Likes = () => {
+    if (user && post.likes.length > 0) {
+      return post.likes.find((like) => like === user._id) ? (
+        <>
+          {/* <i className="text-xl fa-regular fa-thumbs-up"></i> */}
+          <i className="fa-solid fa-thumbs-up"></i>
+          &nbsp;
+          {post.likes.length > 2
+            ? `You and ${post.likes.length - 1} others`
+            : `${post.likes.length} Like${post.likes.length > 1 ? "s" : ""}`}
+        </>
+      ) : (
+        <>
+          <i className="text-xl fa-regular fa-thumbs-up"></i> &nbsp;
+          {post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}
+        </>
+      );
+    }
+    if (user === null) {
+      return (
+        <>
+          <i className="text-xl fa-regular fa-thumbs-up"></i> &nbsp;
+          {post.likes.length} Like{" "}
+        </>
+      );
+    }
+    return (
+      <>
+        <i className="text-xl fa-regular fa-thumbs-up"></i> &nbsp;Like
+      </>
+    );
   };
 
   useEffect(() => {
@@ -58,12 +105,12 @@ const Post = ({ post }) => {
           <p className="mb-3 font-normal text-gray-700 ">{post.message}</p>
           <div className="flex justify-around">
             <button className="text-[#1976d2]" onClick={likeHandler}>
-              <i className="text-xl fa-regular fa-thumbs-up"></i> LIKE
+              <Likes />
             </button>
 
             {user !== null && user._id === post.creator && (
               <button className="text-[#1976d2]" onClick={postDeleteHandler}>
-                <i className="text-xl fa-solid fa-trash"></i> DELETE
+                <i className="text-xl fa-solid fa-trash"></i> Delete
               </button>
             )}
           </div>
