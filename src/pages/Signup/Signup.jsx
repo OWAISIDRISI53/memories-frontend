@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Alert from "../../components/Alert";
 import logo from "../../assets/blogo.png";
+import Spinner from "../../utils/Spinner";
 
 const Signup = () => {
   const navigate = useNavigate();
   const [cred, setCred] = useState({ name: "", email: "", password: "" });
   const [alert, setAlert] = useState(null);
-
+  const [click, setClick] = useState(false);
   const showAlert = () => {
     setAlert(true);
     setTimeout(() => {
@@ -17,35 +18,44 @@ const Signup = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const response = await fetch(
-      "https://memories-backend-o1jt.onrender.com/auth/createuser",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: cred.name,
-          email: cred.email,
-          password: cred.password,
-        }),
+    try {
+      const response = await fetch(
+        "https://memories-backend-o1jt.onrender.com/auth/createuser",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: cred.name,
+            email: cred.email,
+            password: cred.password,
+          }),
+        }
+      );
+
+      const json = await response.json();
+
+      if (json.success) {
+        localStorage.setItem("token", json.authtoken);
+        localStorage.setItem("user", JSON.stringify(json.user));
+        navigate("/");
+      } else {
+        showAlert();
       }
-    );
-
-    const json = await response.json();
-    console.log(json);
-
-    if (json.success) {
-      localStorage.setItem("token", json.authtoken);
-      localStorage.setItem("user", JSON.stringify(json.user));
-      navigate("/");
-    } else {
-      showAlert();
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const changeHandler = (e) => {
     setCred({ ...cred, [e.target.name]: e.target.value });
+  };
+
+  const toggleBtn = () => {
+    if (submitHandler) {
+      setClick(!click);
+    }
   };
 
   return (
@@ -93,10 +103,11 @@ const Signup = () => {
           </div>
 
           <button
+            onClick={toggleBtn}
             type="submit"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
           >
-            Signup
+            {!alert && !click && submitHandler ? "Signup" : <Spinner />}
           </button>
         </form>
         <div className="my-3">

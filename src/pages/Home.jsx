@@ -6,8 +6,9 @@ import postContext from "../context/post/postContext";
 const Home = () => {
   const navigate = useNavigate();
   const context = useContext(postContext);
-  const { getPosts } = context;
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { getPosts, user } = context;
+  // const user = JSON.parse(localStorage.getItem("user"));
+  // const user = localStorage.getItem("user");
 
   useEffect(() => {
     getPosts();

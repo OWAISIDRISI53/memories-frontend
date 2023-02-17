@@ -43,7 +43,6 @@ const Login = () => {
     if (json.success) {
       localStorage.setItem("token", json.authtoken);
       localStorage.setItem("user", JSON.stringify(json.user));
-
       navigate("/");
       window.location.reload();
     } else {

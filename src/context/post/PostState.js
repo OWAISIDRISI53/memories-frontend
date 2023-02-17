@@ -2,10 +2,10 @@ import postContext from "./postContext";
 
 import React, { useState } from 'react'
 
+const host = 'https://memories-backend-o1jt.onrender.com'
+const postInitial = []
 const PostState = (props) => {
-    const host = 'https://memories-backend-o1jt.onrender.com'
     // const host = 'http://localhost:8000'
-    const postInitial = []
 
     const [alert, setAlert] = useState(null)
     const [posts, setPosts] = useState(postInitial)

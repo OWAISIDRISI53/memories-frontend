@@ -17,6 +17,7 @@ const Navbar = () => {
   const logoutHandler = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("no_of_post");
     navigate("/login");
     window.location.reload();
   };
