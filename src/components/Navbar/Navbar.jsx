@@ -10,7 +10,7 @@ const Navbar = () => {
   // const user = JSON.parse(localStorage.getItem("user"));
   const [click, setClick] = useState(false);
   const user = localStorage.getItem("user");
-
+  // console.log(user);
   const toggleNav = () => {
     setClick(!click);
   };
@@ -39,6 +39,7 @@ const Navbar = () => {
                 className="flex items-center mx-3 gap-1 cursor-pointer"
               >
                 <h5>{getFirstName(user.name)} </h5>
+                {/* <h5>{getFirstName("user")} </h5> */}
                 <i className="text-gray-300 text-[8px] fa-solid fa-greater-than"></i>
                 <i className="fa-solid fa-user"></i>
               </Link>
