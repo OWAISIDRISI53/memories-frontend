@@ -74,8 +74,8 @@ const PostState = (props) => {
         }, 1500);
     };
 
-    // const user = JSON.parse(localStorage.getItem("user"));
-    const user = (localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user"));
+    // const user = (localStorage.getItem("user"));
     // console.table(user);
 
     const defaultImage =
