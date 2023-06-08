@@ -7,9 +7,9 @@ import profileImage from "../../assets/profile.png";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+  // const user = JSON.parse(localStorage.getItem("user"));
   const [click, setClick] = useState(false);
-  // const user = localStorage.getItem("user");
+  const user = localStorage.getItem("user");
 
   const toggleNav = () => {
     setClick(!click);
