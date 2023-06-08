@@ -54,17 +54,17 @@ const PostState = (props) => {
         console.log(json);
     }
 
-    const getUserPost = async (post) => {
-        const response = await fetch(`${host}/posts/userPost/${post.creator}`, {
-            method: "GET",
-            headers: {
-                'Content-Type': "application/json",
-                'auth-token': localStorage.getItem("token")
-            },
-        })
-        const json = await response.json()
-        return json.length
-    }
+    // const getUserPost = async (post) => {
+    //     const response = await fetch(`${host}/posts/userPost/${post.creator}`, {
+    //         method: "GET",
+    //         headers: {
+    //             'Content-Type': "application/json",
+    //             'auth-token': localStorage.getItem("token")
+    //         },
+    //     })
+    //     const json = await response.json()
+    //     return json.length
+    // }
 
 
     const showAlert = () => {
@@ -74,15 +74,15 @@ const PostState = (props) => {
         }, 1500);
     };
 
-    const user = JSON.parse(localStorage.getItem("user"));
-    // const user = (localStorage.getItem("user"));
+    // const user = JSON.parse(localStorage.getItem("user"));
+    const user = (localStorage.getItem("user"));
     // console.table(user);
 
     const defaultImage =
         "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png";
 
     return (
-        <postContext.Provider value={{ posts, getPosts, addPost, deletePost, likePost, user, defaultImage, showAlert, getUserPost }}>
+        <postContext.Provider value={{ posts, getPosts, addPost, deletePost, likePost, user, defaultImage, showAlert }}>
             {props.children}
         </postContext.Provider>
     )

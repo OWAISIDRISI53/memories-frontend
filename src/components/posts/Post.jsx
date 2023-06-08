@@ -6,8 +6,7 @@ import postContext from "../../context/post/postContext";
 
 const Post = ({ post }) => {
   const context = useContext(postContext);
-  const { getPosts, deletePost, defaultImage, likePost, getUserPost, user } =
-    context;
+  const { getPosts, deletePost, defaultImage, likePost, user } = context;
 
   // const user = JSON.parse(localStorage.getItem("user"));
 
@@ -21,15 +20,15 @@ const Post = ({ post }) => {
     getPosts();
   };
 
-  useEffect(() => {
-    async function fetchUserPost() {
-      const noPost = await getUserPost(post);
-      console.log(noPost);
-      localStorage.setItem("no_of_post", noPost);
-    }
-    fetchUserPost();
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   async function fetchUserPost() {
+  //     const noPost = await getUserPost(post);
+  //     console.log(noPost);
+  //     localStorage.setItem("no_of_post", noPost);
+  //   }
+  //   fetchUserPost();
+  //   // eslint-disable-next-line
+  // }, []);
 
   const Likes = () => {
     if (user && post.likes.length > 0) {
